@@ -11,7 +11,7 @@ from uuid import uuid4
 import slugify
 from digitalhub.entities.function.crud import get_function
 from digitalhub.runtimes.enums import RuntimeEnvVar
-from digitalhub.stores.credentials.enums import CredsEnvVar
+from digitalhub.stores.configurator.enums import ConfigurationVars
 from hera.workflows import DAG, Artifact, Container, Parameter, Step, Steps, Task
 from hera.workflows import models as m
 from hera.workflows._context import _context
@@ -124,9 +124,9 @@ def container_template(
     args.extend(["--kwargs", json.dumps(template, cls=PipelineParamEncoder)])
 
     # Get image stepper
-    image = os.environ.get(CredsEnvVar.DHCORE_WORKFLOW_IMAGE.value)
+    image = os.environ.get(ConfigurationVars.DHCORE_WORKFLOW_IMAGE.value)
     if image is None:
-        raise RuntimeError(f"Env var '{CredsEnvVar.DHCORE_WORKFLOW_IMAGE.value}' is not set")
+        raise RuntimeError(f"Env var '{ConfigurationVars.DHCORE_WORKFLOW_IMAGE.value}' is not set")
 
     # Get step outputs
     outputs = outputs if outputs is not None else []
